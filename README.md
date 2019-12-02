@@ -7,13 +7,18 @@ Implementation of a simple FFNN for predicting the probability of having a heart
 - This dataset is consisted of 14 columns and 303 rows. The 1st 13 columns(0th-12th) will be considered as features and last row is consists with labels. More information is given in the next section
 - All the necessary information regarding reading the dataset from the cdv file and loading into numpy arrays is given in **How to read the dataset** section below
 - You need to split the dataset for training and testing, **testing size should be 20% of the whole dataset**
-- Then train the ML algorithm, and find and print the accuracy between the actual and predicted results.
-- Part of a code done in this week in the class is given as a sample code at the end
+- Train the FFNN using ```train_data and train_target```
+- Send the completed assignment with all the codes to aie.kaduwela@gmail.com
+
+# Tasks
+- Using the code given under ```Testing the Neural network and getting the accuracy``` and find the accuracy between the actual and predicted results.
+- Change the FFNN architecture as you desired and try to obtain a maximum accuracy and a minimum loss.
 
 ## Dataset, features and labels
 
 "heart.csv" contains 14 attributes, [see the original dataset @ kaggle.com](https://www.kaggle.com/ronitf/heart-disease-uci)
 
+```
 1. age- age in years
 2. sex(1 = male; 0 = female)
 3. cp- chest pain type
@@ -28,6 +33,7 @@ Implementation of a simple FFNN for predicting the probability of having a heart
 12. ca- number of major vessels (0-3) colored by flourosopy
 13. thal3- = normal; 6 = fixed defect; 7 = reversable defect
 14. target 1 or 0
+```
 
 We can apply this dataset into a ML algorithm for future predicitions. Column 0-12 can be considered as features, all together 13 features. and the last column (13th) can be considered as labels
 All the 13 features are in medical terms, therefore no need to worry about them, just consider them as features.
@@ -69,29 +75,33 @@ target=dataset[:,13]
 13th column will be assigned as to the target, which consists the labels of 0 and 1
 
 
-## Sample code
+**You may have to use** ```python np_utils.to_categorical()``` **as shown below inorder to convert the labels into categorical labels**
+```python
+from keras.utils import np_utils
+
+new_train_target=np_utils.to_categorical(train_target)
+```
+
+## Deep Feed Forward Neural Network Architecture
+
+Refer the following NN architecture to implement the NN in Keras
+
+| Layer         | Type          | Activation   |
+| ------------- | ------------- | ------ |
+| 1st Hidden Layer  | Dense, 8 Neurons  | Relu  |
+| 2nd Hidden Layer  | Dense, 16 Neurons  |  Relu |
+| 3rd Hidden Layer  | Dense, 8 Neurons  |  Relu |
+| Output Layer  | Dense, # labels  |  Softmax |
+
+Use appropriate loss function and use ```adam``` as the optimizer
+
+## Testing the Neural Network and getting the accuracy
 
 ```python
+predicted_targets=model.predict(test_data)
 
-from sklearn.model_selection import train_test_split
-
-train_data,test_data,train_target,test_target=train_test_split(data,target,test_size=0.5)
-#print(test_target)
-
-from sklearn.neighbors import KNeighborsClassifier #load KNN classifer
-
-clsfr=KNeighborsClassifier(n_neighbors=3)    #KNN classifier is loaded to clsfr
-
-clsfr.fit(train_data,train_target)  #training the ML algorithm(KNN)
-
-results=clsfr.predict(test_data)
-
-print('Predicted:',results)
-print('Actual:',test_target)
-
-from sklearn.metrics import accuracy_score
-
-accuracy=accuracy_score(test_target,results)
-
-print('accuracy:',accuracy)
+new_test_target=np_utils.to_categorical(test_target)
+model.evaluate(new_test_target,predicted_targets)
 ```
+
+```model.evaluate``` calculates the loss and the accuracy between the actual and predicted targets. Note that you have to convert the ```test_target``` into categorical target before getting the accuarcy
