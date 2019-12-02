@@ -101,7 +101,7 @@ Use appropriate loss function and use ```adam``` as the optimizer
 predicted_targets=model.predict(test_data)
 
 new_test_target=np_utils.to_categorical(test_target)
-model.evaluate(new_test_target,predicted_targets)
+print(model.evaluate(new_test_target,predicted_targets))
 ```
 
 ```model.evaluate``` calculates the loss and the accuracy between the actual and predicted targets. Note that you have to convert the ```test_target``` into categorical target before getting the accuarcy
