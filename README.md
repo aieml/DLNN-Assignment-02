@@ -8,7 +8,7 @@ Implementation of a simple FFNN for predicting the probability of having a heart
 - All the necessary information regarding reading the dataset from the cdv file and loading into numpy arrays is given in **How to read the dataset** section below
 - You need to split the dataset for training and testing, **testing size should be 20% of the whole dataset**
 - Train the FFNN using ```train_data and train_target```
-- Send the completed assignment with all the codes to aie.kaduwela@gmail.com
+- Send and upload a zip file containing the codes into the upload link provided in the site or send the zip file to edxcopedev@gmail.com
 
 # Tasks
 - Using the code given under ```Testing the Neural network and getting the accuracy``` and find the accuracy between the actual and predicted results.
